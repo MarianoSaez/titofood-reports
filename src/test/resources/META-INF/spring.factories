@@ -1,0 +1,1 @@
+org.springframework.test.context.ContextCustomizerFactory = ar.edu.um.fi.programacion2.reports.config.TestContainersSpringContextCustomizerFactory

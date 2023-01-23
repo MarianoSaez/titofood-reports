@@ -1,0 +1,35 @@
+{
+  "applications": ["reports"],
+  "changelogDate": "20230123204713",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "venta",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "foreignId",
+      "fieldType": "Double"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Venta",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "reporte",
+      "otherEntityRelationshipName": "venta",
+      "relationshipName": "reporte",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

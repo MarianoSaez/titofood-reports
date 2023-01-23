@@ -1,0 +1,40 @@
+{
+  "applications": ["reports"],
+  "changelogDate": "20230123204813",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "reporte",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoReporte",
+      "fieldValues": "RECURR (recurrente),HIST (historico)"
+    },
+    {
+      "fieldName": "fechaInicio",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "fechaFin",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "intervalo",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reporte",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "venta",
+      "otherEntityRelationshipName": "reporte",
+      "relationshipName": "venta",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

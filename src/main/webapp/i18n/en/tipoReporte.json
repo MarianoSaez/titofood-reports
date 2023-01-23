@@ -1,0 +1,9 @@
+{
+  "reportsApp": {
+    "TipoReporte": {
+      "null": "",
+      "RECURR": "recurrente",
+      "HIST": "historico"
+    }
+  }
+}
