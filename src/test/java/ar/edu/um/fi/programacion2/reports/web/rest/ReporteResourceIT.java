@@ -3,6 +3,7 @@ package ar.edu.um.fi.programacion2.reports.web.rest;
 import static ar.edu.um.fi.programacion2.reports.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,20 +11,28 @@ import ar.edu.um.fi.programacion2.reports.IntegrationTest;
 import ar.edu.um.fi.programacion2.reports.domain.Reporte;
 import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
 import ar.edu.um.fi.programacion2.reports.repository.ReporteRepository;
+import ar.edu.um.fi.programacion2.reports.service.ReporteService;
 import ar.edu.um.fi.programacion2.reports.service.dto.ReporteDTO;
 import ar.edu.um.fi.programacion2.reports.service.mapper.ReporteMapper;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link ReporteResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class ReporteResourceIT {
@@ -58,8 +68,14 @@ class ReporteResourceIT {
     @Autowired
     private ReporteRepository reporteRepository;
 
+    @Mock
+    private ReporteRepository reporteRepositoryMock;
+
     @Autowired
     private ReporteMapper reporteMapper;
+
+    @Mock
+    private ReporteService reporteServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -159,6 +175,23 @@ class ReporteResourceIT {
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(sameInstant(DEFAULT_FECHA_INICIO))))
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(sameInstant(DEFAULT_FECHA_FIN))))
             .andExpect(jsonPath("$.[*].intervalo").value(hasItem(DEFAULT_INTERVALO)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllReportesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(reporteServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restReporteMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(reporteServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllReportesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(reporteServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restReporteMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(reporteRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

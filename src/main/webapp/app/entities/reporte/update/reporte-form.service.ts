@@ -28,7 +28,7 @@ type ReporteFormRawValue = FormValueOf<IReporte>;
 
 type NewReporteFormRawValue = FormValueOf<NewReporte>;
 
-type ReporteFormDefaults = Pick<NewReporte, 'id' | 'fechaInicio' | 'fechaFin'>;
+type ReporteFormDefaults = Pick<NewReporte, 'id' | 'fechaInicio' | 'fechaFin' | 'ventas'>;
 
 type ReporteFormGroupContent = {
   id: FormControl<ReporteFormRawValue['id'] | NewReporte['id']>;
@@ -36,6 +36,7 @@ type ReporteFormGroupContent = {
   fechaInicio: FormControl<ReporteFormRawValue['fechaInicio']>;
   fechaFin: FormControl<ReporteFormRawValue['fechaFin']>;
   intervalo: FormControl<ReporteFormRawValue['intervalo']>;
+  ventas: FormControl<ReporteFormRawValue['ventas']>;
 };
 
 export type ReporteFormGroup = FormGroup<ReporteFormGroupContent>;
@@ -59,6 +60,7 @@ export class ReporteFormService {
       fechaInicio: new FormControl(reporteRawValue.fechaInicio),
       fechaFin: new FormControl(reporteRawValue.fechaFin),
       intervalo: new FormControl(reporteRawValue.intervalo),
+      ventas: new FormControl(reporteRawValue.ventas ?? []),
     });
   }
 
@@ -83,6 +85,7 @@ export class ReporteFormService {
       id: null,
       fechaInicio: currentTime,
       fechaFin: currentTime,
+      ventas: [],
     };
   }
 
@@ -101,6 +104,7 @@ export class ReporteFormService {
       ...reporte,
       fechaInicio: reporte.fechaInicio ? reporte.fechaInicio.format(DATE_TIME_FORMAT) : undefined,
       fechaFin: reporte.fechaFin ? reporte.fechaFin.format(DATE_TIME_FORMAT) : undefined,
+      ventas: reporte.ventas ?? [],
     };
   }
 }

@@ -32,8 +32,9 @@
     {
       "otherEntityName": "venta",
       "otherEntityRelationshipName": "reporte",
+      "ownerSide": true,
       "relationshipName": "venta",
-      "relationshipType": "one-to-many"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

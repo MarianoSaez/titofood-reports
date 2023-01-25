@@ -18,8 +18,6 @@ public class VentaDTO implements Serializable {
 
     private Double foreignId;
 
-    private ReporteDTO reporte;
-
     public Long getId() {
         return id;
     }
@@ -52,14 +50,6 @@ public class VentaDTO implements Serializable {
         this.foreignId = foreignId;
     }
 
-    public ReporteDTO getReporte() {
-        return reporte;
-    }
-
-    public void setReporte(ReporteDTO reporte) {
-        this.reporte = reporte;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,7 +79,6 @@ public class VentaDTO implements Serializable {
             ", fecha='" + getFecha() + "'" +
             ", precio=" + getPrecio() +
             ", foreignId=" + getForeignId() +
-            ", reporte=" + getReporte() +
             "}";
     }
 }

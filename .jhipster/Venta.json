@@ -27,8 +27,9 @@
     {
       "otherEntityName": "reporte",
       "otherEntityRelationshipName": "venta",
+      "ownerSide": false,
       "relationshipName": "reporte",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceClass"

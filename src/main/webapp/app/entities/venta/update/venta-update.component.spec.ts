@@ -9,8 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { VentaFormService } from './venta-form.service';
 import { VentaService } from '../service/venta.service';
 import { IVenta } from '../venta.model';
-import { IReporte } from 'app/entities/reporte/reporte.model';
-import { ReporteService } from 'app/entities/reporte/service/reporte.service';
 
 import { VentaUpdateComponent } from './venta-update.component';
 
@@ -20,7 +18,6 @@ describe('Venta Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let ventaFormService: VentaFormService;
   let ventaService: VentaService;
-  let reporteService: ReporteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +40,17 @@ describe('Venta Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     ventaFormService = TestBed.inject(VentaFormService);
     ventaService = TestBed.inject(VentaService);
-    reporteService = TestBed.inject(ReporteService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Reporte query and add missing value', () => {
-      const venta: IVenta = { id: 456 };
-      const reporte: IReporte = { id: 62400 };
-      venta.reporte = reporte;
-
-      const reporteCollection: IReporte[] = [{ id: 71614 }];
-      jest.spyOn(reporteService, 'query').mockReturnValue(of(new HttpResponse({ body: reporteCollection })));
-      const additionalReportes = [reporte];
-      const expectedCollection: IReporte[] = [...additionalReportes, ...reporteCollection];
-      jest.spyOn(reporteService, 'addReporteToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ venta });
-      comp.ngOnInit();
-
-      expect(reporteService.query).toHaveBeenCalled();
-      expect(reporteService.addReporteToCollectionIfMissing).toHaveBeenCalledWith(
-        reporteCollection,
-        ...additionalReportes.map(expect.objectContaining)
-      );
-      expect(comp.reportesSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const venta: IVenta = { id: 456 };
-      const reporte: IReporte = { id: 4263 };
-      venta.reporte = reporte;
 
       activatedRoute.data = of({ venta });
       comp.ngOnInit();
 
-      expect(comp.reportesSharedCollection).toContain(reporte);
       expect(comp.venta).toEqual(venta);
     });
   });
@@ -149,18 +120,6 @@ describe('Venta Management Update Component', () => {
       expect(ventaService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareReporte', () => {
-      it('Should forward to reporteService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(reporteService, 'compareReporte');
-        comp.compareReporte(entity, entity2);
-        expect(reporteService.compareReporte).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

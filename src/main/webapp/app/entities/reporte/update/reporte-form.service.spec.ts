@@ -24,6 +24,7 @@ describe('Reporte Form Service', () => {
             fechaInicio: expect.any(Object),
             fechaFin: expect.any(Object),
             intervalo: expect.any(Object),
+            ventas: expect.any(Object),
           })
         );
       });
@@ -38,6 +39,7 @@ describe('Reporte Form Service', () => {
             fechaInicio: expect.any(Object),
             fechaFin: expect.any(Object),
             intervalo: expect.any(Object),
+            ventas: expect.any(Object),
           })
         );
       });

@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { VentaFormService, VentaFormGroup } from './venta-form.service';
 import { IVenta } from '../venta.model';
 import { VentaService } from '../service/venta.service';
-import { IReporte } from 'app/entities/reporte/reporte.model';
-import { ReporteService } from 'app/entities/reporte/service/reporte.service';
 
 @Component({
   selector: 'jhi-venta-update',
@@ -18,18 +16,13 @@ export class VentaUpdateComponent implements OnInit {
   isSaving = false;
   venta: IVenta | null = null;
 
-  reportesSharedCollection: IReporte[] = [];
-
   editForm: VentaFormGroup = this.ventaFormService.createVentaFormGroup();
 
   constructor(
     protected ventaService: VentaService,
     protected ventaFormService: VentaFormService,
-    protected reporteService: ReporteService,
     protected activatedRoute: ActivatedRoute
   ) {}
-
-  compareReporte = (o1: IReporte | null, o2: IReporte | null): boolean => this.reporteService.compareReporte(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ venta }) => {
@@ -37,8 +30,6 @@ export class VentaUpdateComponent implements OnInit {
       if (venta) {
         this.updateForm(venta);
       }
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -78,18 +69,5 @@ export class VentaUpdateComponent implements OnInit {
   protected updateForm(venta: IVenta): void {
     this.venta = venta;
     this.ventaFormService.resetForm(this.editForm, venta);
-
-    this.reportesSharedCollection = this.reporteService.addReporteToCollectionIfMissing<IReporte>(
-      this.reportesSharedCollection,
-      venta.reporte
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.reporteService
-      .query()
-      .pipe(map((res: HttpResponse<IReporte[]>) => res.body ?? []))
-      .pipe(map((reportes: IReporte[]) => this.reporteService.addReporteToCollectionIfMissing<IReporte>(reportes, this.venta?.reporte)))
-      .subscribe((reportes: IReporte[]) => (this.reportesSharedCollection = reportes));
   }
 }

@@ -32,6 +32,20 @@
         <dropDefaultValue tableName="reporte" columnName="fecha_fin" columnDataType="${datetimeType}"/>
     </changeSet>
 
+    <changeSet id="20230123204813-1-relations" author="jhipster">
+
+        <createTable tableName="rel_reporte__venta">
+            <column name="venta_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reporte_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="reporte_id, venta_id" tableName="rel_reporte__venta"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

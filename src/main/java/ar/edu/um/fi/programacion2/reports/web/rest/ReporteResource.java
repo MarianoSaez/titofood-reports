@@ -52,6 +52,8 @@ public class ReporteResource {
      * @param reporteDTO the reporteDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new reporteDTO, or with status {@code 400 (Bad Request)} if the reporte has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
+     *
+     * Also this method handles the start up of the thread that will interact with the main service.
      */
     @PostMapping("/reportes")
     public ResponseEntity<ReporteDTO> createReporte(@RequestBody ReporteDTO reporteDTO) throws URISyntaxException {
@@ -140,12 +142,21 @@ public class ReporteResource {
      * {@code GET  /reportes} : get all the reportes.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of reportes in body.
      */
     @GetMapping("/reportes")
-    public ResponseEntity<List<ReporteDTO>> getAllReportes(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
+    public ResponseEntity<List<ReporteDTO>> getAllReportes(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
+    ) {
         log.debug("REST request to get a page of Reportes");
-        Page<ReporteDTO> page = reporteService.findAll(pageable);
+        Page<ReporteDTO> page;
+        if (eagerload) {
+            page = reporteService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = reporteService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

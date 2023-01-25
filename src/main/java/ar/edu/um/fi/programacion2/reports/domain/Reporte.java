@@ -40,9 +40,14 @@ public class Reporte implements Serializable {
     @Column(name = "intervalo")
     private String intervalo;
 
-    @OneToMany(mappedBy = "reporte")
+    @ManyToMany
+    @JoinTable(
+        name = "rel_reporte__venta",
+        joinColumns = @JoinColumn(name = "reporte_id"),
+        inverseJoinColumns = @JoinColumn(name = "venta_id")
+    )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "reporte" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "reportes" }, allowSetters = true)
     private Set<Venta> ventas = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -117,12 +122,6 @@ public class Reporte implements Serializable {
     }
 
     public void setVentas(Set<Venta> ventas) {
-        if (this.ventas != null) {
-            this.ventas.forEach(i -> i.setReporte(null));
-        }
-        if (ventas != null) {
-            ventas.forEach(i -> i.setReporte(this));
-        }
         this.ventas = ventas;
     }
 
@@ -133,13 +132,13 @@ public class Reporte implements Serializable {
 
     public Reporte addVenta(Venta venta) {
         this.ventas.add(venta);
-        venta.setReporte(this);
+        venta.getReportes().add(this);
         return this;
     }
 
     public Reporte removeVenta(Venta venta) {
         this.ventas.remove(venta);
-        venta.setReporte(null);
+        venta.getReportes().remove(this);
         return this;
     }
 

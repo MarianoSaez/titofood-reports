@@ -57,6 +57,21 @@
           <label class="form-label" jhiTranslate="reportsApp.reporte.intervalo" for="field_intervalo">Intervalo</label>
           <input type="text" class="form-control" name="intervalo" id="field_intervalo" data-cy="intervalo" formControlName="intervalo" />
         </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="reportsApp.reporte.venta" for="field_ventas">Venta</label>
+          <select
+            class="form-control"
+            id="field_ventas"
+            data-cy="venta"
+            multiple
+            name="ventas"
+            formControlName="ventas"
+            [compareWith]="compareVenta"
+          >
+            <option [ngValue]="ventaOption" *ngFor="let ventaOption of ventasSharedCollection">{{ ventaOption.id }}</option>
+          </select>
+        </div>
       </div>
 
       <div>

@@ -1,0 +1,42 @@
+
+application {
+  config {
+    baseName reports
+    applicationType monolith
+    packageName ar.edu.um.fi.programacion2.reports
+    authenticationType jwt
+    prodDatabaseType mariadb
+    devDatabaseType mariadb
+      serverPort 8081
+
+  }
+  entities Venta, Reporte
+}
+
+enum TipoReporte {
+	RECURR (recurrente)
+    HIST (historico)
+}
+
+entity Reporte {
+	tipo TipoReporte
+    fechaInicio ZonedDateTime
+    fechaFin ZonedDateTime
+    intervalo String
+}
+
+entity Venta {
+	fecha Instant
+    precio Float
+	foreignId Double
+}
+
+relationship ManyToMany {
+  Reporte to Venta
+}
+
+paginate Reporte, Venta with pagination
+
+service Reporte, Venta with serviceClass
+dto * with mapstruct
+

@@ -3,7 +3,9 @@ package ar.edu.um.fi.programacion2.reports.service.dto;
 import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link ar.edu.um.fi.programacion2.reports.domain.Reporte} entity.
@@ -20,6 +22,8 @@ public class ReporteDTO implements Serializable {
     private ZonedDateTime fechaFin;
 
     private String intervalo;
+
+    private Set<VentaDTO> ventas = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -61,6 +65,14 @@ public class ReporteDTO implements Serializable {
         this.intervalo = intervalo;
     }
 
+    public Set<VentaDTO> getVentas() {
+        return ventas;
+    }
+
+    public void setVentas(Set<VentaDTO> ventas) {
+        this.ventas = ventas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,6 +103,7 @@ public class ReporteDTO implements Serializable {
             ", fechaInicio='" + getFechaInicio() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
             ", intervalo='" + getIntervalo() + "'" +
+            ", ventas=" + getVentas() +
             "}";
     }
 }

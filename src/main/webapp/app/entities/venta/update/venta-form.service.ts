@@ -27,14 +27,14 @@ type VentaFormRawValue = FormValueOf<IVenta>;
 
 type NewVentaFormRawValue = FormValueOf<NewVenta>;
 
-type VentaFormDefaults = Pick<NewVenta, 'id' | 'fecha'>;
+type VentaFormDefaults = Pick<NewVenta, 'id' | 'fecha' | 'reportes'>;
 
 type VentaFormGroupContent = {
   id: FormControl<VentaFormRawValue['id'] | NewVenta['id']>;
   fecha: FormControl<VentaFormRawValue['fecha']>;
   precio: FormControl<VentaFormRawValue['precio']>;
   foreignId: FormControl<VentaFormRawValue['foreignId']>;
-  reporte: FormControl<VentaFormRawValue['reporte']>;
+  reportes: FormControl<VentaFormRawValue['reportes']>;
 };
 
 export type VentaFormGroup = FormGroup<VentaFormGroupContent>;
@@ -57,7 +57,7 @@ export class VentaFormService {
       fecha: new FormControl(ventaRawValue.fecha),
       precio: new FormControl(ventaRawValue.precio),
       foreignId: new FormControl(ventaRawValue.foreignId),
-      reporte: new FormControl(ventaRawValue.reporte),
+      reportes: new FormControl(ventaRawValue.reportes ?? []),
     });
   }
 
@@ -81,6 +81,7 @@ export class VentaFormService {
     return {
       id: null,
       fecha: currentTime,
+      reportes: [],
     };
   }
 
@@ -97,6 +98,7 @@ export class VentaFormService {
     return {
       ...venta,
       fecha: venta.fecha ? venta.fecha.format(DATE_TIME_FORMAT) : undefined,
+      reportes: venta.reportes ?? [],
     };
   }
 }

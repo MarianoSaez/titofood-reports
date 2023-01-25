@@ -30,6 +30,13 @@
         <dd>
           <span>{{ reporte.intervalo }}</span>
         </dd>
+        <dt><span jhiTranslate="reportsApp.reporte.venta">Venta</span></dt>
+        <dd>
+          <span *ngFor="let venta of reporte.ventas; let last = last">
+            <a [routerLink]="['/venta', venta.id, 'view']">{{ venta.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

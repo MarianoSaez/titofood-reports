@@ -3,6 +3,8 @@ package ar.edu.um.fi.programacion2.reports.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -33,9 +35,10 @@ public class Venta implements Serializable {
     @Column(name = "foreign_id")
     private Double foreignId;
 
-    @ManyToOne
+    @ManyToMany(mappedBy = "ventas")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "ventas" }, allowSetters = true)
-    private Reporte reporte;
+    private Set<Reporte> reportes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -91,16 +94,34 @@ public class Venta implements Serializable {
         this.foreignId = foreignId;
     }
 
-    public Reporte getReporte() {
-        return this.reporte;
+    public Set<Reporte> getReportes() {
+        return this.reportes;
     }
 
-    public void setReporte(Reporte reporte) {
-        this.reporte = reporte;
+    public void setReportes(Set<Reporte> reportes) {
+        if (this.reportes != null) {
+            this.reportes.forEach(i -> i.removeVenta(this));
+        }
+        if (reportes != null) {
+            reportes.forEach(i -> i.addVenta(this));
+        }
+        this.reportes = reportes;
     }
 
-    public Venta reporte(Reporte reporte) {
-        this.setReporte(reporte);
+    public Venta reportes(Set<Reporte> reportes) {
+        this.setReportes(reportes);
+        return this;
+    }
+
+    public Venta addReporte(Reporte reporte) {
+        this.reportes.add(reporte);
+        reporte.getVentas().add(this);
+        return this;
+    }
+
+    public Venta removeReporte(Reporte reporte) {
+        this.reportes.remove(reporte);
+        reporte.getVentas().remove(this);
         return this;
     }
 

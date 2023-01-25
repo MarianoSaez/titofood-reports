@@ -56,12 +56,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="reporte.id">
-            <div class="d-flex">
-              <span jhiTranslate="reportsApp.venta.reporte">Reporte</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -73,11 +67,6 @@
           <td>{{ venta.fecha | formatMediumDatetime }}</td>
           <td>{{ venta.precio }}</td>
           <td>{{ venta.foreignId }}</td>
-          <td>
-            <div *ngIf="venta.reporte">
-              <a [routerLink]="['/reporte', venta.reporte.id, 'view']">{{ venta.reporte.id }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/venta', venta.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
