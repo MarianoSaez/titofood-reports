@@ -62,6 +62,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="foreignId">
+            <div class="d-flex">
+              <span jhiTranslate="reportsApp.reporte.foreignId">Foreign Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -74,6 +80,7 @@
           <td>{{ reporte.fechaInicio | formatMediumDatetime }}</td>
           <td>{{ reporte.fechaFin | formatMediumDatetime }}</td>
           <td>{{ reporte.intervalo }}</td>
+          <td>{{ reporte.foreignId }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

@@ -1,6 +1,9 @@
 package ar.edu.um.fi.programacion2.reports.service.dto;
 
 import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -13,6 +16,7 @@ import java.util.Set;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ReporteDTO implements Serializable {
 
+    @JsonIgnore
     private Long id;
 
     private TipoReporte tipo;
@@ -22,6 +26,9 @@ public class ReporteDTO implements Serializable {
     private ZonedDateTime fechaFin;
 
     private String intervalo;
+
+    @JsonProperty("id")
+    private Long foreignId;
 
     private Set<VentaDTO> ventas = new HashSet<>();
 
@@ -65,6 +72,14 @@ public class ReporteDTO implements Serializable {
         this.intervalo = intervalo;
     }
 
+    public Long getForeignId() {
+        return foreignId;
+    }
+
+    public void setForeignId(Long foreignId) {
+        this.foreignId = foreignId;
+    }
+
     public Set<VentaDTO> getVentas() {
         return ventas;
     }
@@ -103,6 +118,7 @@ public class ReporteDTO implements Serializable {
             ", fechaInicio='" + getFechaInicio() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
             ", intervalo='" + getIntervalo() + "'" +
+            ", foreignId=" + getForeignId() +
             ", ventas=" + getVentas() +
             "}";
     }

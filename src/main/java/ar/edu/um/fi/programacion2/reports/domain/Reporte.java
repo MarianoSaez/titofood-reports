@@ -40,6 +40,9 @@ public class Reporte implements Serializable {
     @Column(name = "intervalo")
     private String intervalo;
 
+    @Column(name = "foreign_id")
+    private Long foreignId;
+
     @ManyToMany
     @JoinTable(
         name = "rel_reporte__venta",
@@ -117,6 +120,19 @@ public class Reporte implements Serializable {
         this.intervalo = intervalo;
     }
 
+    public Long getForeignId() {
+        return this.foreignId;
+    }
+
+    public Reporte foreignId(Long foreignId) {
+        this.setForeignId(foreignId);
+        return this;
+    }
+
+    public void setForeignId(Long foreignId) {
+        this.foreignId = foreignId;
+    }
+
     public Set<Venta> getVentas() {
         return this.ventas;
     }
@@ -170,6 +186,7 @@ public class Reporte implements Serializable {
             ", fechaInicio='" + getFechaInicio() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
             ", intervalo='" + getIntervalo() + "'" +
+            ", foreignId=" + getForeignId() +
             "}";
     }
 }

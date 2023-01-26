@@ -8,6 +8,7 @@ export interface IReporte {
   fechaInicio?: dayjs.Dayjs | null;
   fechaFin?: dayjs.Dayjs | null;
   intervalo?: string | null;
+  foreignId?: number | null;
   ventas?: Pick<IVenta, 'id'>[] | null;
 }
 

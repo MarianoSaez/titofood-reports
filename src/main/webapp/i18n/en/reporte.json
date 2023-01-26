@@ -22,6 +22,7 @@
       "fechaInicio": "Fecha Inicio",
       "fechaFin": "Fecha Fin",
       "intervalo": "Intervalo",
+      "foreignId": "Foreign Id",
       "venta": "Venta"
     }
   }

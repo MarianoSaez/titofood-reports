@@ -36,6 +36,7 @@ type ReporteFormGroupContent = {
   fechaInicio: FormControl<ReporteFormRawValue['fechaInicio']>;
   fechaFin: FormControl<ReporteFormRawValue['fechaFin']>;
   intervalo: FormControl<ReporteFormRawValue['intervalo']>;
+  foreignId: FormControl<ReporteFormRawValue['foreignId']>;
   ventas: FormControl<ReporteFormRawValue['ventas']>;
 };
 
@@ -60,6 +61,7 @@ export class ReporteFormService {
       fechaInicio: new FormControl(reporteRawValue.fechaInicio),
       fechaFin: new FormControl(reporteRawValue.fechaFin),
       intervalo: new FormControl(reporteRawValue.intervalo),
+      foreignId: new FormControl(reporteRawValue.foreignId),
       ventas: new FormControl(reporteRawValue.ventas ?? []),
     });
   }

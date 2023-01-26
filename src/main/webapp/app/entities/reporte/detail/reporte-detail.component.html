@@ -30,6 +30,10 @@
         <dd>
           <span>{{ reporte.intervalo }}</span>
         </dd>
+        <dt><span jhiTranslate="reportsApp.reporte.foreignId">Foreign Id</span></dt>
+        <dd>
+          <span>{{ reporte.foreignId }}</span>
+        </dd>
         <dt><span jhiTranslate="reportsApp.reporte.venta">Venta</span></dt>
         <dd>
           <span *ngFor="let venta of reporte.ventas; let last = last">

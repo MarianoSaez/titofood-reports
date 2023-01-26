@@ -3,7 +3,8 @@
     "TipoReporte": {
       "null": "",
       "RECURR": "recurrente",
-      "HIST": "historico"
+      "HIST": "historico",
+      "CANCELAR": "cancelar"
     }
   }
 }

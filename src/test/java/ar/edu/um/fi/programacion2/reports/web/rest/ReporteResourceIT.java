@@ -59,6 +59,9 @@ class ReporteResourceIT {
     private static final String DEFAULT_INTERVALO = "AAAAAAAAAA";
     private static final String UPDATED_INTERVALO = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_FOREIGN_ID = 1L;
+    private static final Long UPDATED_FOREIGN_ID = 2L;
+
     private static final String ENTITY_API_URL = "/api/reportes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -96,7 +99,8 @@ class ReporteResourceIT {
             .tipo(DEFAULT_TIPO)
             .fechaInicio(DEFAULT_FECHA_INICIO)
             .fechaFin(DEFAULT_FECHA_FIN)
-            .intervalo(DEFAULT_INTERVALO);
+            .intervalo(DEFAULT_INTERVALO)
+            .foreignId(DEFAULT_FOREIGN_ID);
         return reporte;
     }
 
@@ -111,7 +115,8 @@ class ReporteResourceIT {
             .tipo(UPDATED_TIPO)
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
-            .intervalo(UPDATED_INTERVALO);
+            .intervalo(UPDATED_INTERVALO)
+            .foreignId(UPDATED_FOREIGN_ID);
         return reporte;
     }
 
@@ -138,6 +143,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaInicio()).isEqualTo(DEFAULT_FECHA_INICIO);
         assertThat(testReporte.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(DEFAULT_INTERVALO);
+        assertThat(testReporte.getForeignId()).isEqualTo(DEFAULT_FOREIGN_ID);
     }
 
     @Test
@@ -174,7 +180,8 @@ class ReporteResourceIT {
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(sameInstant(DEFAULT_FECHA_INICIO))))
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(sameInstant(DEFAULT_FECHA_FIN))))
-            .andExpect(jsonPath("$.[*].intervalo").value(hasItem(DEFAULT_INTERVALO)));
+            .andExpect(jsonPath("$.[*].intervalo").value(hasItem(DEFAULT_INTERVALO)))
+            .andExpect(jsonPath("$.[*].foreignId").value(hasItem(DEFAULT_FOREIGN_ID.intValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -209,7 +216,8 @@ class ReporteResourceIT {
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO.toString()))
             .andExpect(jsonPath("$.fechaInicio").value(sameInstant(DEFAULT_FECHA_INICIO)))
             .andExpect(jsonPath("$.fechaFin").value(sameInstant(DEFAULT_FECHA_FIN)))
-            .andExpect(jsonPath("$.intervalo").value(DEFAULT_INTERVALO));
+            .andExpect(jsonPath("$.intervalo").value(DEFAULT_INTERVALO))
+            .andExpect(jsonPath("$.foreignId").value(DEFAULT_FOREIGN_ID.intValue()));
     }
 
     @Test
@@ -231,7 +239,12 @@ class ReporteResourceIT {
         Reporte updatedReporte = reporteRepository.findById(reporte.getId()).get();
         // Disconnect from session so that the updates on updatedReporte are not directly saved in db
         em.detach(updatedReporte);
-        updatedReporte.tipo(UPDATED_TIPO).fechaInicio(UPDATED_FECHA_INICIO).fechaFin(UPDATED_FECHA_FIN).intervalo(UPDATED_INTERVALO);
+        updatedReporte
+            .tipo(UPDATED_TIPO)
+            .fechaInicio(UPDATED_FECHA_INICIO)
+            .fechaFin(UPDATED_FECHA_FIN)
+            .intervalo(UPDATED_INTERVALO)
+            .foreignId(UPDATED_FOREIGN_ID);
         ReporteDTO reporteDTO = reporteMapper.toDto(updatedReporte);
 
         restReporteMockMvc
@@ -250,6 +263,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testReporte.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(UPDATED_INTERVALO);
+        assertThat(testReporte.getForeignId()).isEqualTo(UPDATED_FOREIGN_ID);
     }
 
     @Test
@@ -347,6 +361,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testReporte.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(DEFAULT_INTERVALO);
+        assertThat(testReporte.getForeignId()).isEqualTo(DEFAULT_FOREIGN_ID);
     }
 
     @Test
@@ -361,7 +376,12 @@ class ReporteResourceIT {
         Reporte partialUpdatedReporte = new Reporte();
         partialUpdatedReporte.setId(reporte.getId());
 
-        partialUpdatedReporte.tipo(UPDATED_TIPO).fechaInicio(UPDATED_FECHA_INICIO).fechaFin(UPDATED_FECHA_FIN).intervalo(UPDATED_INTERVALO);
+        partialUpdatedReporte
+            .tipo(UPDATED_TIPO)
+            .fechaInicio(UPDATED_FECHA_INICIO)
+            .fechaFin(UPDATED_FECHA_FIN)
+            .intervalo(UPDATED_INTERVALO)
+            .foreignId(UPDATED_FOREIGN_ID);
 
         restReporteMockMvc
             .perform(
@@ -379,6 +399,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testReporte.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(UPDATED_INTERVALO);
+        assertThat(testReporte.getForeignId()).isEqualTo(UPDATED_FOREIGN_ID);
     }
 
     @Test

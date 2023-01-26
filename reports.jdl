@@ -16,6 +16,7 @@ application {
 enum TipoReporte {
 	RECURR (recurrente)
     HIST (historico)
+    CANCELAR(cancelar)
 }
 
 entity Reporte {
@@ -23,6 +24,8 @@ entity Reporte {
     fechaInicio ZonedDateTime
     fechaFin ZonedDateTime
     intervalo String
+    foreignId Long
+
 }
 
 entity Venta {

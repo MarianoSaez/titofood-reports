@@ -8,7 +8,7 @@
     {
       "fieldName": "tipo",
       "fieldType": "TipoReporte",
-      "fieldValues": "RECURR (recurrente),HIST (historico)"
+      "fieldValues": "RECURR (recurrente),HIST (historico),CANCELAR (cancelar)"
     },
     {
       "fieldName": "fechaInicio",
@@ -21,6 +21,10 @@
     {
       "fieldName": "intervalo",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "foreignId",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,

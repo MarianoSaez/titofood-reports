@@ -9,18 +9,19 @@ export const sampleWithRequiredData: IReporte = {
 };
 
 export const sampleWithPartialData: IReporte = {
-  id: 2695,
-  tipo: TipoReporte['HIST'],
-  fechaInicio: dayjs('2023-01-23T13:32'),
-  intervalo: 'Savings Metrics Manager',
+  id: 83232,
+  tipo: TipoReporte['RECURR'],
+  fechaInicio: dayjs('2023-01-22T21:35'),
+  intervalo: 'Pants Orchestrator',
 };
 
 export const sampleWithFullData: IReporte = {
-  id: 72257,
-  tipo: TipoReporte['RECURR'],
-  fechaInicio: dayjs('2023-01-23T01:23'),
-  fechaFin: dayjs('2023-01-23T05:43'),
-  intervalo: 'Movies',
+  id: 23334,
+  tipo: TipoReporte['HIST'],
+  fechaInicio: dayjs('2023-01-23T03:27'),
+  fechaFin: dayjs('2023-01-23T14:19'),
+  intervalo: 'Savings Ergonomic Creative',
+  foreignId: 55159,
 };
 
 export const sampleWithNewData: NewReporte = {
