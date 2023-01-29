@@ -42,7 +42,7 @@ export class AlertErrorComponent implements OnDestroy {
             }
           }
           if (errorHeader) {
-            const alertData = entityKey ? { entityName: translateService.instant(`global.menu.entities.${entityKey}`) } : undefined;
+            const alertData = entityKey ? { entityName: translateService.instant(`global.foreignId.entities.${entityKey}`) } : undefined;
             this.addErrorAlert(errorHeader, errorHeader, alertData);
           } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
             const fieldErrors = httpErrorResponse.error.fieldErrors;
