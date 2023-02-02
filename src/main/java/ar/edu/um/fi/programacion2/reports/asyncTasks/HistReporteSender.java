@@ -2,6 +2,7 @@ package ar.edu.um.fi.programacion2.reports.asyncTasks;
 
 import ar.edu.um.fi.programacion2.reports.asyncTasks.dto.RespuestaReporteRequestDTO;
 import ar.edu.um.fi.programacion2.reports.asyncTasks.dto.VentaForReportDTO;
+import ar.edu.um.fi.programacion2.reports.service.dto.ReporteDTO;
 import ar.edu.um.fi.programacion2.reports.service.dto.VentaDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,6 +24,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
+@Qualifier("histReporteSender")
 public class HistReporteSender implements ReporteSender {
 
     private final Logger log = LoggerFactory.getLogger(HistReporteSender.class);
@@ -31,7 +34,7 @@ public class HistReporteSender implements ReporteSender {
     private final HttpHeaders headers = new HttpHeaders();
 
     @Async
-    public void sendReport() {
+    public void sendReport(ReporteDTO report) {
         RespuestaReporteRequestDTO requestDTO;
 
         try {

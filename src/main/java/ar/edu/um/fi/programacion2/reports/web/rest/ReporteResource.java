@@ -1,5 +1,9 @@
 package ar.edu.um.fi.programacion2.reports.web.rest;
 
+import ar.edu.um.fi.programacion2.reports.asyncTasks.HistReporteSender;
+import ar.edu.um.fi.programacion2.reports.asyncTasks.RecurrReporteSender;
+import ar.edu.um.fi.programacion2.reports.asyncTasks.ReporteSender;
+import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
 import ar.edu.um.fi.programacion2.reports.repository.ReporteRepository;
 import ar.edu.um.fi.programacion2.reports.service.ReporteService;
 import ar.edu.um.fi.programacion2.reports.service.dto.ReporteDTO;
@@ -11,6 +15,8 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +47,12 @@ public class ReporteResource {
 
     private final ReporteRepository reporteRepository;
 
+    @Autowired
+    private ReporteSender recurrReporteSender;
+
+    @Autowired
+    private ReporteSender histReporteSender;
+
     public ReporteResource(ReporteService reporteService, ReporteRepository reporteRepository) {
         this.reporteService = reporteService;
         this.reporteRepository = reporteRepository;
@@ -62,6 +74,13 @@ public class ReporteResource {
             throw new BadRequestAlertException("A new reporte cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ReporteDTO result = reporteService.save(reporteDTO);
+
+        if (reporteDTO.getTipo().equals(TipoReporte.HIST)) {
+            histReporteSender.sendReport(result);
+        } else if (reporteDTO.getTipo().equals(TipoReporte.RECURR)) {
+            recurrReporteSender.sendReport(result);
+        } else if (reporteDTO.getTipo().equals(TipoReporte.CANCELAR)) {}
+
         return ResponseEntity
             .created(new URI("/api/reportes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
