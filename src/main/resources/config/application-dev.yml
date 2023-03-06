@@ -108,4 +108,6 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0aXRvZm9vZCIsImF1dGgiOiIiLCJleHAiOjE5OTI3NzAwMjN9.j8neTNht5GBgeYurRPyKSGsIYfQ2n5wUgdlTl9NvL_8pAJkZqd_OSenoCals2M79wCb9Nu4vvBhgtkUeEInKWw
+  franchiseuuid: 40e8be94-6bb4-4bd7-a81a-14a82167de5e

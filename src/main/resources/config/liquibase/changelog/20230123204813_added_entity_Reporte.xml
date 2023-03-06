@@ -29,6 +29,9 @@
             <column name="foreign_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="cancelado" type="boolean">
+                <constraints nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="reporte" columnName="fecha_inicio" columnDataType="${datetimeType}"/>
@@ -71,6 +74,7 @@
             <column name="fecha_fin" type="date"/>
             <column name="intervalo" type="string"/>
             <column name="foreign_id" type="numeric"/>
+            <column name="cancelado" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

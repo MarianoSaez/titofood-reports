@@ -25,6 +25,7 @@ entity Reporte {
     fechaFin ZonedDateTime
     intervalo String
     foreignId Long
+    cancelado Boolean
 
 }
 

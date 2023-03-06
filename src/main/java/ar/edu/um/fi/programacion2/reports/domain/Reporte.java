@@ -1,8 +1,5 @@
 package ar.edu.um.fi.programacion2.reports.domain;
 
-import ar.edu.um.fi.programacion2.reports.asyncTasks.HistReporteSender;
-import ar.edu.um.fi.programacion2.reports.asyncTasks.RecurrReporteSender;
-import ar.edu.um.fi.programacion2.reports.asyncTasks.ReporteSender;
 import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
@@ -46,6 +43,9 @@ public class Reporte implements Serializable {
     @Column(name = "foreign_id")
     private Long foreignId;
 
+    @Column(name = "cancelado")
+    private Boolean cancelado;
+
     @ManyToMany
     @JoinTable(
         name = "rel_reporte__venta",
@@ -55,20 +55,6 @@ public class Reporte implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "reportes" }, allowSetters = true)
     private Set<Venta> ventas = new HashSet<>();
-
-    //    @PrePersist
-    //    public void prePersist() {
-    //        ReporteSender sender = null;
-    //
-    //        if (this.tipo.equals(TipoReporte.HIST)) {
-    //            sender = new HistReporteSender();
-    //        } else if (this.tipo.equals(TipoReporte.RECURR)) {
-    //            sender = new RecurrReporteSender();
-    //        } else if (this.tipo.equals(TipoReporte.CANCELAR)) {}
-    //
-    //        assert sender != null;
-    //        sender.sendReport();
-    //    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -150,6 +136,19 @@ public class Reporte implements Serializable {
         this.foreignId = foreignId;
     }
 
+    public Boolean getCancelado() {
+        return this.cancelado;
+    }
+
+    public Reporte cancelado(Boolean cancelado) {
+        this.setCancelado(cancelado);
+        return this;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
     public Set<Venta> getVentas() {
         return this.ventas;
     }
@@ -204,6 +203,7 @@ public class Reporte implements Serializable {
             ", fechaFin='" + getFechaFin() + "'" +
             ", intervalo='" + getIntervalo() + "'" +
             ", foreignId=" + getForeignId() +
+            ", cancelado='" + getCancelado() + "'" +
             "}";
     }
 }

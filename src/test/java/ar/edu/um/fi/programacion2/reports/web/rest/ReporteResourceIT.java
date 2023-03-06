@@ -62,6 +62,9 @@ class ReporteResourceIT {
     private static final Long DEFAULT_FOREIGN_ID = 1L;
     private static final Long UPDATED_FOREIGN_ID = 2L;
 
+    private static final Boolean DEFAULT_CANCELADO = false;
+    private static final Boolean UPDATED_CANCELADO = true;
+
     private static final String ENTITY_API_URL = "/api/reportes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -100,7 +103,8 @@ class ReporteResourceIT {
             .fechaInicio(DEFAULT_FECHA_INICIO)
             .fechaFin(DEFAULT_FECHA_FIN)
             .intervalo(DEFAULT_INTERVALO)
-            .foreignId(DEFAULT_FOREIGN_ID);
+            .foreignId(DEFAULT_FOREIGN_ID)
+            .cancelado(DEFAULT_CANCELADO);
         return reporte;
     }
 
@@ -116,7 +120,8 @@ class ReporteResourceIT {
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
             .intervalo(UPDATED_INTERVALO)
-            .foreignId(UPDATED_FOREIGN_ID);
+            .foreignId(UPDATED_FOREIGN_ID)
+            .cancelado(UPDATED_CANCELADO);
         return reporte;
     }
 
@@ -144,6 +149,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(DEFAULT_INTERVALO);
         assertThat(testReporte.getForeignId()).isEqualTo(DEFAULT_FOREIGN_ID);
+        assertThat(testReporte.getCancelado()).isEqualTo(DEFAULT_CANCELADO);
     }
 
     @Test
@@ -181,7 +187,8 @@ class ReporteResourceIT {
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(sameInstant(DEFAULT_FECHA_INICIO))))
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(sameInstant(DEFAULT_FECHA_FIN))))
             .andExpect(jsonPath("$.[*].intervalo").value(hasItem(DEFAULT_INTERVALO)))
-            .andExpect(jsonPath("$.[*].foreignId").value(hasItem(DEFAULT_FOREIGN_ID.intValue())));
+            .andExpect(jsonPath("$.[*].foreignId").value(hasItem(DEFAULT_FOREIGN_ID.intValue())))
+            .andExpect(jsonPath("$.[*].cancelado").value(hasItem(DEFAULT_CANCELADO.booleanValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -217,7 +224,8 @@ class ReporteResourceIT {
             .andExpect(jsonPath("$.fechaInicio").value(sameInstant(DEFAULT_FECHA_INICIO)))
             .andExpect(jsonPath("$.fechaFin").value(sameInstant(DEFAULT_FECHA_FIN)))
             .andExpect(jsonPath("$.intervalo").value(DEFAULT_INTERVALO))
-            .andExpect(jsonPath("$.foreignId").value(DEFAULT_FOREIGN_ID.intValue()));
+            .andExpect(jsonPath("$.foreignId").value(DEFAULT_FOREIGN_ID.intValue()))
+            .andExpect(jsonPath("$.cancelado").value(DEFAULT_CANCELADO.booleanValue()));
     }
 
     @Test
@@ -244,7 +252,8 @@ class ReporteResourceIT {
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
             .intervalo(UPDATED_INTERVALO)
-            .foreignId(UPDATED_FOREIGN_ID);
+            .foreignId(UPDATED_FOREIGN_ID)
+            .cancelado(UPDATED_CANCELADO);
         ReporteDTO reporteDTO = reporteMapper.toDto(updatedReporte);
 
         restReporteMockMvc
@@ -264,6 +273,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(UPDATED_INTERVALO);
         assertThat(testReporte.getForeignId()).isEqualTo(UPDATED_FOREIGN_ID);
+        assertThat(testReporte.getCancelado()).isEqualTo(UPDATED_CANCELADO);
     }
 
     @Test
@@ -362,6 +372,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(DEFAULT_INTERVALO);
         assertThat(testReporte.getForeignId()).isEqualTo(DEFAULT_FOREIGN_ID);
+        assertThat(testReporte.getCancelado()).isEqualTo(DEFAULT_CANCELADO);
     }
 
     @Test
@@ -381,7 +392,8 @@ class ReporteResourceIT {
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
             .intervalo(UPDATED_INTERVALO)
-            .foreignId(UPDATED_FOREIGN_ID);
+            .foreignId(UPDATED_FOREIGN_ID)
+            .cancelado(UPDATED_CANCELADO);
 
         restReporteMockMvc
             .perform(
@@ -400,6 +412,7 @@ class ReporteResourceIT {
         assertThat(testReporte.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
         assertThat(testReporte.getIntervalo()).isEqualTo(UPDATED_INTERVALO);
         assertThat(testReporte.getForeignId()).isEqualTo(UPDATED_FOREIGN_ID);
+        assertThat(testReporte.getCancelado()).isEqualTo(UPDATED_CANCELADO);
     }
 
     @Test

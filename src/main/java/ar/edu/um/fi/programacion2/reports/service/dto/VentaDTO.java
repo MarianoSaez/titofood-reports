@@ -1,6 +1,5 @@
 package ar.edu.um.fi.programacion2.reports.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.Objects;
  * A DTO for the {@link ar.edu.um.fi.programacion2.reports.domain.Venta} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class VentaDTO implements Serializable {
 
     private Long id;

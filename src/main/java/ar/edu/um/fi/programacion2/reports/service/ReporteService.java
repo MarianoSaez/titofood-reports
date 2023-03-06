@@ -31,6 +31,22 @@ public class ReporteService {
     }
 
     /**
+     * Get a reporte by its foreignId
+     *
+     * @param foreignId of the entity
+     * @return the entity matching the foreignId provided
+     */
+    public Optional<ReporteDTO> findOneByForeignId(Long foreignId) {
+        Optional<Reporte> r = reporteRepository.findByForeignId(foreignId);
+
+        ReporteDTO reporteDTO = null;
+        if (r.isPresent()) {
+            reporteDTO = reporteMapper.toDto(r.get());
+        }
+        return Optional.of(reporteDTO);
+    }
+
+    /**
      * Save a reporte.
      *
      * @param reporteDTO the entity to save.

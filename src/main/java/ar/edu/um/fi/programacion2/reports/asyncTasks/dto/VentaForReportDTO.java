@@ -12,7 +12,7 @@ public class VentaForReportDTO {
 
     public VentaForReportDTO() {}
 
-    @JsonProperty("ventaId")
+    //    @JsonProperty("ventaId")
     public Long getId() {
         return id; // Enviar este atributo causa errores en el servicio principal
     }

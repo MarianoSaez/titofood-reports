@@ -28,7 +28,7 @@ type ReporteFormRawValue = FormValueOf<IReporte>;
 
 type NewReporteFormRawValue = FormValueOf<NewReporte>;
 
-type ReporteFormDefaults = Pick<NewReporte, 'id' | 'fechaInicio' | 'fechaFin' | 'ventas'>;
+type ReporteFormDefaults = Pick<NewReporte, 'id' | 'fechaInicio' | 'fechaFin' | 'cancelado' | 'ventas'>;
 
 type ReporteFormGroupContent = {
   id: FormControl<ReporteFormRawValue['id'] | NewReporte['id']>;
@@ -37,6 +37,7 @@ type ReporteFormGroupContent = {
   fechaFin: FormControl<ReporteFormRawValue['fechaFin']>;
   intervalo: FormControl<ReporteFormRawValue['intervalo']>;
   foreignId: FormControl<ReporteFormRawValue['foreignId']>;
+  cancelado: FormControl<ReporteFormRawValue['cancelado']>;
   ventas: FormControl<ReporteFormRawValue['ventas']>;
 };
 
@@ -62,6 +63,7 @@ export class ReporteFormService {
       fechaFin: new FormControl(reporteRawValue.fechaFin),
       intervalo: new FormControl(reporteRawValue.intervalo),
       foreignId: new FormControl(reporteRawValue.foreignId),
+      cancelado: new FormControl(reporteRawValue.cancelado),
       ventas: new FormControl(reporteRawValue.ventas ?? []),
     });
   }
@@ -87,6 +89,7 @@ export class ReporteFormService {
       id: null,
       fechaInicio: currentTime,
       fechaFin: currentTime,
+      cancelado: false,
       ventas: [],
     };
   }

@@ -9,19 +9,21 @@ export const sampleWithRequiredData: IReporte = {
 };
 
 export const sampleWithPartialData: IReporte = {
-  id: 83232,
-  tipo: TipoReporte['RECURR'],
-  fechaInicio: dayjs('2023-01-22T21:35'),
-  intervalo: 'Pants Orchestrator',
+  id: 30284,
+  tipo: TipoReporte['CANCELAR'],
+  fechaInicio: dayjs('2023-01-23T05:47'),
+  intervalo: 'compelling',
+  cancelado: true,
 };
 
 export const sampleWithFullData: IReporte = {
-  id: 23334,
-  tipo: TipoReporte['HIST'],
-  fechaInicio: dayjs('2023-01-23T03:27'),
-  fechaFin: dayjs('2023-01-23T14:19'),
-  intervalo: 'Savings Ergonomic Creative',
-  foreignId: 55159,
+  id: 99136,
+  tipo: TipoReporte['RECURR'],
+  fechaInicio: dayjs('2023-01-23T06:59'),
+  fechaFin: dayjs('2023-01-23T03:27'),
+  intervalo: 'bluetooth',
+  foreignId: 2680,
+  cancelado: false,
 };
 
 export const sampleWithNewData: NewReporte = {

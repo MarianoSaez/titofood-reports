@@ -1,5 +1,6 @@
 package ar.edu.um.fi.programacion2.reports.web.rest;
 
+import ar.edu.um.fi.programacion2.reports.asyncTasks.CancelReporte;
 import ar.edu.um.fi.programacion2.reports.asyncTasks.HistReporteSender;
 import ar.edu.um.fi.programacion2.reports.asyncTasks.RecurrReporteSender;
 import ar.edu.um.fi.programacion2.reports.asyncTasks.ReporteSender;
@@ -53,6 +54,9 @@ public class ReporteResource {
     @Autowired
     private ReporteSender histReporteSender;
 
+    @Autowired
+    private CancelReporte cancelReporte;
+
     public ReporteResource(ReporteService reporteService, ReporteRepository reporteRepository) {
         this.reporteService = reporteService;
         this.reporteRepository = reporteRepository;
@@ -73,13 +77,16 @@ public class ReporteResource {
         if (reporteDTO.getId() != null) {
             throw new BadRequestAlertException("A new reporte cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        reporteDTO.setCancelado(false);
         ReporteDTO result = reporteService.save(reporteDTO);
 
         if (reporteDTO.getTipo().equals(TipoReporte.HIST)) {
             histReporteSender.sendReport(result);
         } else if (reporteDTO.getTipo().equals(TipoReporte.RECURR)) {
             recurrReporteSender.sendReport(result);
-        } else if (reporteDTO.getTipo().equals(TipoReporte.CANCELAR)) {}
+        } else if (reporteDTO.getTipo().equals(TipoReporte.CANCELAR)) {
+            cancelReporte.cancel(reporteDTO);
+        }
 
         return ResponseEntity
             .created(new URI("/api/reportes/" + result.getId()))

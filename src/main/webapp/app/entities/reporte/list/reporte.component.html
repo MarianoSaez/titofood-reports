@@ -68,6 +68,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="cancelado">
+            <div class="d-flex">
+              <span jhiTranslate="reportsApp.reporte.cancelado">Cancelado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -81,6 +87,7 @@
           <td>{{ reporte.fechaFin | formatMediumDatetime }}</td>
           <td>{{ reporte.intervalo }}</td>
           <td>{{ reporte.foreignId }}</td>
+          <td>{{ reporte.cancelado }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button

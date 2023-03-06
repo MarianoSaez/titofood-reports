@@ -1,9 +1,6 @@
 package ar.edu.um.fi.programacion2.reports.service.dto;
 
 import ar.edu.um.fi.programacion2.reports.domain.enumeration.TipoReporte;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -16,7 +13,6 @@ import java.util.Set;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ReporteDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
     private TipoReporte tipo;
@@ -27,10 +23,48 @@ public class ReporteDTO implements Serializable {
 
     private String intervalo;
 
-    @JsonProperty("id")
     private Long foreignId;
 
+    private Boolean cancelado;
+
+    private Long reporteCanceladoId;
+
     private Set<VentaDTO> ventas = new HashSet<>();
+
+    @Override
+    public String toString() {
+        return (
+            "ReporteDTO{" +
+            "id=" +
+            id +
+            ", tipo=" +
+            tipo +
+            ", fechaInicio=" +
+            fechaInicio +
+            ", fechaFin=" +
+            fechaFin +
+            ", intervalo='" +
+            intervalo +
+            '\'' +
+            ", foreignId=" +
+            foreignId +
+            ", cancelado=" +
+            cancelado +
+            ", reporteCanceladoId=" +
+            reporteCanceladoId +
+            ", ventas=" +
+            ventas +
+            '}'
+        );
+    }
+
+    public Long getReporteCanceladoId() {
+        return reporteCanceladoId;
+    }
+
+    public void setReporteCanceladoId(Long reporteCanceladoId) {
+        this.reporteCanceladoId = reporteCanceladoId;
+    }
 
     public Long getId() {
         return id;
@@ -80,6 +114,14 @@ public class ReporteDTO implements Serializable {
         this.foreignId = foreignId;
     }
 
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
     public Set<VentaDTO> getVentas() {
         return ventas;
     }
@@ -107,19 +149,5 @@ public class ReporteDTO implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
-    @Override
-    public String toString() {
-        return "ReporteDTO{" +
-            "id=" + getId() +
-            ", tipo='" + getTipo() + "'" +
-            ", fechaInicio='" + getFechaInicio() + "'" +
-            ", fechaFin='" + getFechaFin() + "'" +
-            ", intervalo='" + getIntervalo() + "'" +
-            ", foreignId=" + getForeignId() +
-            ", ventas=" + getVentas() +
-            "}";
     }
 }

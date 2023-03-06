@@ -25,6 +25,7 @@ describe('Reporte Form Service', () => {
             fechaFin: expect.any(Object),
             intervalo: expect.any(Object),
             foreignId: expect.any(Object),
+            cancelado: expect.any(Object),
             ventas: expect.any(Object),
           })
         );
@@ -41,6 +42,7 @@ describe('Reporte Form Service', () => {
             fechaFin: expect.any(Object),
             intervalo: expect.any(Object),
             foreignId: expect.any(Object),
+            cancelado: expect.any(Object),
             ventas: expect.any(Object),
           })
         );

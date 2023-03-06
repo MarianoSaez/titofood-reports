@@ -17,6 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ReporteRepository extends ReporteRepositoryWithBagRelationships, JpaRepository<Reporte, Long> {
+    Optional<Reporte> findByForeignId(Long foreignId);
+
     default Optional<Reporte> findOneWithEagerRelationships(Long id) {
         return this.fetchBagRelationships(this.findById(id));
     }

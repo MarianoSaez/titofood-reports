@@ -6,6 +6,6 @@ export const passwordResetInitRoute: Route = {
   path: 'reset/request',
   component: PasswordResetInitComponent,
   data: {
-    pageTitle: 'global.foreignId.account.password',
+    pageTitle: 'global.menu.account.password',
   },
 };

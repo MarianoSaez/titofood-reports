@@ -1,6 +1,8 @@
 package ar.edu.um.fi.programacion2.reports.asyncTasks;
 
 import ar.edu.um.fi.programacion2.reports.asyncTasks.runnable.SchedulableReport;
+import ar.edu.um.fi.programacion2.reports.config.ApplicationProperties;
+import ar.edu.um.fi.programacion2.reports.service.ReporteService;
 import ar.edu.um.fi.programacion2.reports.service.dto.ReporteDTO;
 import java.time.Duration;
 import java.time.Instant;
@@ -25,6 +27,12 @@ public class RecurrReporteSender implements ReporteSender {
     @Autowired
     private ThreadPoolTaskScheduler threadPoolTaskScheduler;
 
+    @Autowired
+    private ReporteService reporteService;
+
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
     private final Logger log = LoggerFactory.getLogger(RecurrReporteSender.class);
 
     public void sendReport(ReporteDTO report) {
@@ -36,7 +44,15 @@ public class RecurrReporteSender implements ReporteSender {
         Duration intervalo = Duration.parse(report.getIntervalo());
 
         // Crear hilo para reporte y dotarlo de los atributos necesarios para que se detenga de forma autonoma
-        SchedulableReport schedulableReport = new SchedulableReport(intervalo, fechaInicio, fechaFin);
+        SchedulableReport schedulableReport = new SchedulableReport(
+            report.getId(),
+            intervalo,
+            fechaInicio,
+            fechaFin,
+            reporteService,
+            applicationProperties.getToken(),
+            applicationProperties.getFranchiseuuid()
+        );
         ScheduledFuture<?> future = threadPoolTaskScheduler.scheduleAtFixedRate(schedulableReport, fechaInicio, intervalo);
         schedulableReport.setFuture(future);
 

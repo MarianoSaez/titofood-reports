@@ -25,6 +25,10 @@
     {
       "fieldName": "foreignId",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "cancelado",
+      "fieldType": "Boolean"
     }
   ],
   "fluentMethods": true,
