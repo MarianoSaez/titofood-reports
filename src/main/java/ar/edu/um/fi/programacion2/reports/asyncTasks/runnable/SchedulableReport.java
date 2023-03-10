@@ -122,18 +122,14 @@ public class SchedulableReport implements Runnable {
         // Obtener las ventas del ultimo intervalo de tiempo
 
         try {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
             // Obtener las ventas que cumplen el parametro del reporte
             // http://localhost:8080/api/ventas/2023-01-13T13:00:40/2023-01-13T23:59:40
             ResponseEntity<VentaForReportDTO[]> ventasResponse = restTemplate.getForEntity(
-                "http://localhost:8080/api/ventas/" +
-                LocalDateTime.ofInstant(fechaInicio, ZoneOffset.UTC) +
-                "/" +
-                LocalDateTime.ofInstant(fechaFin, ZoneOffset.UTC),
+                "http://localhost:8080/api/ventas/" + LocalDateTime.now().minus(intervalo) + "/" + LocalDateTime.now(),
                 VentaForReportDTO[].class
             );
             List<VentaForReportDTO> ventas = List.of(ventasResponse.getBody());
+            log.info("Franchise service has responded with {} ventas made in the las interval of {}", ventas.size(), intervalo);
 
             // Tareas realizadas para construir el reporte historico...
             RespuestaReporteRequestDTO requestDTO = new ObjectMapper()
